@@ -20,14 +20,16 @@ import android.util.Log;
 public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 
 	private static final HashSet<String> vocals = new HashSet<String>();
-	private HashSet<String> words = new HashSet<String>();
+	//private HashSet<String> words = new HashSet<String>();
 	private ArrayList<String> foundWords = new ArrayList<String>();
 	private ProgressDialog dialog;
 	private final Context context;
+	private CharacterTree tree;
 	
 	public WordFinder(InputStream assetInputStream, Context context) throws IOException {
 		super();
 		this.context = context;
+		tree = new CharacterTree();
 		readFile(assetInputStream);
 		vocals.add("a");
 		vocals.add("e");
@@ -91,10 +93,14 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		if(endWithTwoVocalsOrFourNonVocals(soFar)){
 			return soFar;
 		}
-		//Need one more break condition here.
-		if(words.contains(soFar) && !foundWords.contains(soFar)){
+		
+		if(soFar.length() > 0 && !tree.contains(soFar)){
+			return soFar;
+		}
+		
+		if(!foundWords.contains(soFar) && tree.isWord(soFar)){
+			Log.i("DAD", soFar);
 			foundWords.add(soFar);
-			Log.i("DDD", soFar);
 		}
 
 		visited[indexV][indexH] = true;
@@ -168,8 +174,11 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 	private void readFile(InputStream assetInputStream) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream));
 		String s = null;
+
 		while((s = reader.readLine()) != null){
-			words.add(s.toLowerCase(new Locale("sv")));
+			s = s.toLowerCase(new Locale("sv"));
+			tree.add(s);
+			//words.add(s);
 		}
 	}
 

@@ -13,8 +13,9 @@ public class CharacterTree {
 		for (int i = 0; i < s.length(); i++ ) {
 			char c = s.charAt(i);
 			if (!node.children.containsKey(c) ){
-				node = new Node();
-				node.children.put(c, node);
+				Node newNode = new Node();
+				node.children.put(c, newNode);
+				node = newNode;
 			}else{
 				node = node.children.get(c);
 			}

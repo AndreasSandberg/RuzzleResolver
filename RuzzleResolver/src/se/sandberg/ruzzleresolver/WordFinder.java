@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 
@@ -79,22 +80,21 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		if(result.isEmpty()){
 			builder.setMessage("Inget resultat").setTitle("Resultat");
-			
 		}else{
-			builder.setMessage(result.get(0)).setTitle("Resultat");
+			builder.setMessage(result.get(0) + " " + result.size()).setTitle("Resultat");
 			
 		}
 		builder.create().show();
 	}
 	
 	private String nextChar(String[][] game, int indexV, int indexH, String soFar, boolean [][] visited){
-		
 		if(endWithTwoVocalsOrFourNonVocals(soFar)){
 			return soFar;
 		}
-
+		//Need one more break condition here.
 		if(words.contains(soFar) && !foundWords.contains(soFar)){
 			foundWords.add(soFar);
+			Log.i("DDD", soFar);
 		}
 
 		visited[indexV][indexH] = true;
@@ -157,7 +157,10 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 
 	private boolean[][] copy(boolean[][] source){
 		boolean[][] result = new boolean[4][4];
-		System.arraycopy(source, 0, result, 0, 4);
+		for(int i = 0; i < result.length; i++){
+			System.arraycopy(source[i], 0, result[i], 0, 4);
+		}
+		
 		return result;
 
 	}
@@ -167,7 +170,6 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		String s = null;
 		while((s = reader.readLine()) != null){
 			words.add(s.toLowerCase(new Locale("sv")));
-
 		}
 	}
 

@@ -2,6 +2,7 @@ package se.sandberg.ruzzleresolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,7 +42,7 @@ public class MainActivity extends Activity {
 			for(int j = 1; j < 5; j++){
 				int editTextId = getResources().getIdentifier("editText" + (j + (i-1)*4), "id", "se.sandberg.ruzzleresolver");
 				EditText characterEdit = (EditText) findViewById(editTextId);
-				game[i-1][j-1] = characterEdit.getText().toString();
+				game[i-1][j-1] = characterEdit.getText().toString().toLowerCase(new Locale("sv"));
 			}
 		}
 		wordFinder.execute(game);

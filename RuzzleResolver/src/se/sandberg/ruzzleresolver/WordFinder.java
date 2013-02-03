@@ -1,13 +1,10 @@
 package se.sandberg.ruzzleresolver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,11 +18,11 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	private final Context context;
 	private CharacterTree tree;
 	
-	public WordFinder(InputStream assetInputStream, Context context) throws IOException {
+	public WordFinder(Context context, CharacterTree tree) {
 		super();
 		this.context = context;
-		tree = new CharacterTree();
-		readFile(assetInputStream);
+		this.tree = tree;
+
 	}
 
 	@Override
@@ -68,15 +65,6 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 		Intent intent = new Intent(context, ResultsActivity.class);
 		intent.putStringArrayListExtra(ResultsActivity.class.getPackage().toString()+".result", result);
 		context.startActivity(intent);
-		
-		/*AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		if(result.isEmpty()){
-			builder.setMessage("Inget resultat").setTitle("Resultat");
-		}else{
-			builder.setMessage(result.get(0) + " " + result.size()).setTitle("Resultat");
-			
-		}
-		builder.create().show();*/
 	}
 	
 	
@@ -122,19 +110,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 
 	}
 
-	private void readFile(InputStream assetInputStream) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream));
-		String s = null;
 
-		while((s = reader.readLine()) != null){
-			//The game field has 16 characters
-			if(s.length() > 16){
-				continue;
-			}
-			s = s.toUpperCase(new Locale("sv"));
-			tree.add(s);
-		}
-	}
 
 
 }

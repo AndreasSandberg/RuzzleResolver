@@ -13,15 +13,14 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
-	private WordFinder wordFinder;
+	private TreeReader treeReader;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		try {
 			InputStream assetInputStream = getAssets().open("swedish.txt");
-			//Should be done in background tread.
-			wordFinder = new WordFinder(assetInputStream, this);
+			treeReader = new TreeReader(assetInputStream);
 		} catch (IOException e) {
 			createDialog(e.getMessage(), "Fel");
 		}
@@ -45,6 +44,7 @@ public class MainActivity extends Activity {
 		}
 		//TODO Disable button
 		//Button findViewById = (Button) findViewById(R.id.button1);
+		WordFinder wordFinder = new WordFinder(this, treeReader.getTree());
 		wordFinder.execute(game);
 	}
 

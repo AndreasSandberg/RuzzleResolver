@@ -16,8 +16,9 @@
         android:layout_marginTop="30dp"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -30,8 +31,9 @@
         android:layout_toRightOf="@+id/editText1"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -44,8 +46,9 @@
         android:layout_toRightOf="@+id/editText2"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -58,8 +61,9 @@
         android:layout_toRightOf="@+id/editText3"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <!-- Second row -->
@@ -74,8 +78,9 @@
         android:layout_marginTop="100dp"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -88,8 +93,9 @@
         android:layout_toRightOf="@+id/editText5"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -102,8 +108,9 @@
         android:layout_toRightOf="@+id/editText6"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -116,11 +123,12 @@
         android:layout_toRightOf="@+id/editText7"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
-     <!-- Third row -->
+    <!-- Third row -->
 
     <EditText
         android:id="@+id/editText9"
@@ -132,8 +140,9 @@
         android:layout_marginTop="170dp"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -146,8 +155,9 @@
         android:layout_toRightOf="@+id/editText9"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -160,8 +170,9 @@
         android:layout_toRightOf="@+id/editText10"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -174,11 +185,12 @@
         android:layout_toRightOf="@+id/editText11"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
-    
-       <!-- Fourth row -->
+
+    <!-- Fourth row -->
 
     <EditText
         android:id="@+id/editText13"
@@ -190,8 +202,9 @@
         android:layout_marginTop="240dp"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -204,8 +217,9 @@
         android:layout_toRightOf="@+id/editText13"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -218,8 +232,9 @@
         android:layout_toRightOf="@+id/editText14"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <EditText
@@ -232,8 +247,9 @@
         android:layout_toRightOf="@+id/editText15"
         android:background="#EC7703"
         android:ems="1"
-        android:inputType="text"
-        android:maxLength="1" >
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:paddingLeft="10dip" >
     </EditText>
 
     <Button
@@ -245,6 +261,6 @@
         android:layout_below="@+id/editText13"
         android:layout_marginTop="32dp"
         android:onClick="findWords"
-        android:text="Kör!" />
+        android:text="@string/buttonLabel" />
 
 </RelativeLayout>

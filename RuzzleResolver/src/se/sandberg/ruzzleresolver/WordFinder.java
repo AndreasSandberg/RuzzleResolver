@@ -7,20 +7,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.sax.StartElementListener;
 
 public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 
-	private static final HashSet<String> vocals = new HashSet<String>();
-	//private HashSet<String> words = new HashSet<String>();
 	private ArrayList<String> foundWords = new ArrayList<String>();
 	private ProgressDialog dialog;
 	private final Context context;
@@ -31,15 +29,6 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		this.context = context;
 		tree = new CharacterTree();
 		readFile(assetInputStream);
-		vocals.add("a");
-		vocals.add("e");
-		vocals.add("i");
-		vocals.add("o");
-		vocals.add("u");
-		vocals.add("y");
-		vocals.add("å");
-		vocals.add("ä");
-		vocals.add("ö");
 	}
 
 	@Override
@@ -79,86 +68,50 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 			dialog.dismiss();
 		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		ResultsActivity resultsActivity = new ResultsActivity(result);
+		//resultsActivity.startActivity(new Intent());
+		
+		/*AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		if(result.isEmpty()){
 			builder.setMessage("Inget resultat").setTitle("Resultat");
 		}else{
 			builder.setMessage(result.get(0) + " " + result.size()).setTitle("Resultat");
 			
 		}
-		builder.create().show();
+		builder.create().show();*/
 	}
 	
+	
+	
 	private String nextChar(String[][] game, int indexV, int indexH, String soFar, boolean [][] visited){
-		if(endWithTwoVocalsOrFourNonVocals(soFar)){
+		
+		if(soFar.length() > 0 && tree.get(soFar) == null){
 			return soFar;
 		}
 		
-		if(soFar.length() > 0 && !tree.contains(soFar)){
-			return soFar;
-		}
-		
-		if(!foundWords.contains(soFar) && tree.isWord(soFar)){
-			Log.i("DAD", soFar);
+		if(!foundWords.contains(soFar) && tree.get(soFar).isWord()){
 			foundWords.add(soFar);
 		}
 
 		visited[indexV][indexH] = true;
-		if(indexV < 3 && !visited[indexV+1][indexH]){
-			nextChar(game, indexV+1, indexH, soFar+game[indexV][indexH], copy(visited));
-		}
-		if(indexH < 3 && !visited[indexV][indexH+1]){
-			nextChar(game, indexV, indexH+1, soFar+game[indexV][indexH], copy(visited));
-		}
-		if(indexV != 0 && !visited[indexV-1][indexH]){
-			nextChar(game, indexV-1, indexH, soFar+game[indexV][indexH], copy(visited));
-		}
-		if(indexH != 0 && !visited[indexV][indexH-1]){
-			nextChar(game, indexV, indexH-1, soFar+game[indexV][indexH], copy(visited));
-		}
-		if(indexV < 3 && indexH < 3 && !visited[indexV+1][indexH+1]){
-			nextChar(game, indexV+1, indexH+1, soFar+game[indexV][indexH], copy(visited));
-		}
 
-		if(indexV != 0 && indexH < 3 && !visited[indexV-1][indexH+1]){
-			nextChar(game, indexV-1, indexH+1, soFar+game[indexV][indexH], copy(visited));
+		for(int i = -1; i <= 1; i++){
+			for(int j = -1; j <= 1; j++){
+				if(i == 0 && j == 0){
+					continue;
+				}
+				if(indexV+i < 0 || indexV+i > 3){
+					continue;
+				}
+				if(indexH+j < 0 || indexH+j > 3){
+					continue;
+				}
+				if(!visited[indexV+i][indexH+j]){
+					nextChar(game, indexV+i, indexH+j, soFar+game[indexV][indexH], copy(visited));
+				}
+			}			
 		}
-
-		if(indexV < 3  && indexH != 0 && !visited[indexV+1][indexH-1]){
-			nextChar(game, indexV+1, indexH-1, soFar+game[indexV][indexH], copy(visited));
-		}
-
-		if(indexV != 0 && indexH != 0 && !visited[indexV-1][indexH-1]){
-			nextChar(game, indexV-1, indexH-1, soFar+game[indexV][indexH], copy(visited));
-		}
-
-
 		return soFar;
-	}
-
-	//Flaggstång (four non vocals in between two vocals "ggst")
-	private boolean endWithTwoVocalsOrFourNonVocals(String soFar) {
-		int length = soFar.length();
-		if(length < 3){
-			return false;
-		}else{
-			String last = soFar.substring(length-2, length-1);
-			String lastLast = soFar.substring(length-3, length-2);
-			if(vocals.contains(last) && vocals.contains(lastLast)){
-				return true;
-			}
-			if(length >= 5){
-				String lastLastLast = soFar.substring(length-4, length-3);
-				String lastLastLastLast = soFar.substring(length-5, length-4);
-				if(!vocals.contains(last) 
-						&& !vocals.contains(lastLast)
-						&& !vocals.contains(lastLastLast)
-						&& !vocals.contains(lastLastLastLast)){
-					return true;
-				}	
-			}
-		}
-		return false;
 	}
 
 	private boolean[][] copy(boolean[][] source){
@@ -176,9 +129,12 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		String s = null;
 
 		while((s = reader.readLine()) != null){
-			s = s.toLowerCase(new Locale("sv"));
+			//The game field has 16 characters
+			if(s.length() > 16){
+				continue;
+			}
+			s = s.toUpperCase(new Locale("sv"));
 			tree.add(s);
-			//words.add(s);
 		}
 	}
 

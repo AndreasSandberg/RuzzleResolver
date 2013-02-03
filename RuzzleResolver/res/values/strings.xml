@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">RuzzleResolver</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="buttonLabel">Kör!</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_results">ResultsActivity</string>
 
 </resources>

@@ -7,7 +7,6 @@ public class CharacterTree {
 
 	private Node root = new Node();
 
-	//Must add end condition (when word ends) (boolean)
 	public void add(String s) {
 		Node node = this.root;
 		for (int i = 0; i < s.length(); i++ ) {
@@ -23,31 +22,26 @@ public class CharacterTree {
 		node.isWord = true;
 	}
 
-	public boolean isWord(String s){
+	public Node get(String s){
 		Node node = this.root;
 		for (int i = 0; i < s.length(); i++){
 			node = node.children.get(s.charAt(i));
 			if(node == null){
-				return false;
+				return null;
 			}
 		}
-		return node.isWord;
+		return node;
 	}
 
-	public boolean contains(String s) {
-		Node node = this.root;
-		for (int i = 0; i < s.length(); i++){
-			node = node.children.get(s.charAt(i));
-			if(node == null){
-				return false;
-			}
+	
+
+	static class Node {
+		private boolean isWord;
+		private Map<Character, Node> children = new HashMap<Character, Node>();
+		
+		public boolean isWord() {
+			return isWord;
 		}
-		return true;
-	}
-
-	private static class Node {
-		public boolean isWord;
-		public Map<Character, Node> children = new HashMap<Character, Node>();
 	}
 }
 

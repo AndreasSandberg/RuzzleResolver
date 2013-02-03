@@ -1,5 +1,6 @@
 package se.sandberg.ruzzleresolver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -9,16 +10,11 @@ import android.widget.ArrayAdapter;
 
 public class ResultsActivity extends ListActivity {
 
-	private List<String> results;
-	
-	public ResultsActivity(List<String> results) {
-		super();
-		this.results = results;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ArrayList<String> results = getIntent().getExtras().getStringArrayList(ResultsActivity.class.getPackage().toString()+".result");
 		setContentView(R.layout.activity_results);
         setListAdapter(new ArrayAdapter<String>(this, 
              android.R.layout.simple_list_item_1, results));

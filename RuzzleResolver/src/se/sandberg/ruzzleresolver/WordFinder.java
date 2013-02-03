@@ -7,17 +7,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.sax.StartElementListener;
 
-public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
+public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 
 	private ArrayList<String> foundWords = new ArrayList<String>();
 	private ProgressDialog dialog;
@@ -32,7 +29,7 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 	}
 
 	@Override
-	protected List<String> doInBackground(String[][]... arg0) {
+	protected ArrayList<String> doInBackground(String[][]... arg0) {
 
 		String[][] game = arg0[0];
 		for(int i = 0; i < 4; i++){
@@ -43,7 +40,7 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 		Collections.sort(foundWords, new Comparator<String>() {
 			@Override
 			public int compare(String o1, String o2) {
-				return o1.length() - o2.length();
+				return o2.length() - o1.length();
 			}
 		});
 
@@ -62,14 +59,15 @@ public class WordFinder extends AsyncTask<String[][], Void, List<String>>{
 
 
 	@Override
-	protected void onPostExecute(List<String> result) {
+	protected void onPostExecute(ArrayList<String> result) {
 		super.onPostExecute(result);
 		if (dialog.isShowing()) {
 			dialog.dismiss();
 		}
 
-		ResultsActivity resultsActivity = new ResultsActivity(result);
-		//resultsActivity.startActivity(new Intent());
+		Intent intent = new Intent(context, ResultsActivity.class);
+		intent.putStringArrayListExtra(ResultsActivity.class.getPackage().toString()+".result", result);
+		context.startActivity(intent);
 		
 		/*AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		if(result.isEmpty()){

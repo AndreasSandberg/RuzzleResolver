@@ -4,28 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.HashSet;
 
 public class TreeReader {
 
 	private CharacterTree tree;
 
-	public TreeReader(final InputStream assetInputStream) {
+	public TreeReader(final InputStream assetInputStream, final String[][] characters) throws IOException {
 		tree = new CharacterTree();
-
-		ExecutorService executor = Executors.newFixedThreadPool(1);
-		executor.submit(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					readFile(assetInputStream);
-				} catch (IOException e) {
-					//TODO: something clever...
-				}
-			}
-		});
+		readFile(assetInputStream, characters);
 	}
 
 
@@ -34,17 +21,24 @@ public class TreeReader {
 	}
 
 
-	private void readFile(InputStream assetInputStream) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream));
-		String s = null;
-
-		while((s = reader.readLine()) != null){
-			//The game field has 16 characters
-			if(s.length() > 16){
-				continue;
+	private void readFile(InputStream assetInputStream, String[][] characters) throws IOException {
+		//Only read words containing the characters on the game field.
+		HashSet<Character> gameCharacters = new HashSet<Character>();
+		for(String[] characterArr : characters){
+			for(String character : characterArr){
+				gameCharacters.add(character.toCharArray()[0]);
 			}
-			s = s.toUpperCase(new Locale("sv"));
-			tree.add(s);
+		}
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream));
+		String line = null;
+		outer : while((line = reader.readLine()) != null){
+			for(Character c : line.toCharArray()){
+				if(!gameCharacters.contains(c)){
+					continue outer;
+				}
+			}
+			tree.add(line);
 		}
 	}
 

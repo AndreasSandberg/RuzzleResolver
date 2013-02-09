@@ -5,35 +5,36 @@ import java.io.InputStream;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
-	private TreeReader treeReader;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		try {
-			InputStream assetInputStream = getAssets().open("swedish.txt");
-			treeReader = new TreeReader(assetInputStream);
-		} catch (IOException e) {
-			createDialog(e.getMessage(), "Fel");
-		}
 	}
 
 	@Override
+	public void onAttachedToWindow() {
+	    super.onAttachedToWindow();
+	    Window window = getWindow();
+	    window.setFormat(PixelFormat.RGBA_8888);
+	    window.getDecorView().getBackground().setDither(true);
+	}
+	
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
+		return false;
 	}
 
-	public void findWords(View view) {
+	public void findWords(View view) throws IOException {
 		String[][] game = new String [4][4];
 		for(int i = 1; i < 5; i++){
 			for(int j = 1; j < 5; j++){
@@ -42,17 +43,8 @@ public class MainActivity extends Activity {
 				game[i-1][j-1] = characterEdit.getText().toString().toUpperCase(new Locale("sv"));
 			}
 		}
-		//TODO Disable button
-		//Button findViewById = (Button) findViewById(R.id.button1);
-		WordFinder wordFinder = new WordFinder(this, treeReader.getTree());
+		InputStream assetInputStream = getAssets().open("swedish.txt");
+		WordFinder wordFinder = new WordFinder(this, assetInputStream);
 		wordFinder.execute(game);
 	}
-
-	private void createDialog(String message, String title){
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setMessage(message).setTitle(title);
-		AlertDialog dialog = builder.create();
-		dialog.show();
-	}
-
 }

@@ -1,0 +1,5 @@
+Applikationen använder en modifierad version av Den Stora Svenska Ordlistan (DSSO): http://www.dsso.se/
+
+Denna modifierade version finns tillgänglig för nedladdning här: https://github.com/AndreasSandberg/RuzzleResolver/blob/master/RuzzleResolver/assets/swedish.txt
+
+Både DSSO och den modifierade ordlistan distribueras under licensen Creative Commons Attribution-ShareAlike: http://creativecommons.org/licenses/by-sa/3.0/

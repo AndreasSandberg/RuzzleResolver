@@ -16,19 +16,27 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	private ArrayList<String> foundWords = new ArrayList<String>();
 	private ProgressDialog dialog;
 	private final Context context;
+	private InputStream assetInputStream;
 	private CharacterTree tree;
 	
-	public WordFinder(Context context, CharacterTree tree) {
+	public WordFinder(Context context, InputStream assetInputStream) {
 		super();
 		this.context = context;
-		this.tree = tree;
+		this.assetInputStream = assetInputStream;
 
 	}
 
 	@Override
 	protected ArrayList<String> doInBackground(String[][]... arg0) {
-
 		String[][] game = arg0[0];
+		try {
+			TreeReader treeReader = new TreeReader(assetInputStream, game);
+			tree = treeReader.getTree();
+		} catch (IOException e) {
+			//TODO Better error handling...
+			return new ArrayList<String>();
+		}
+		
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4; j++){
 				nextChar(game, j, i, "", new boolean[4][4]);

@@ -9,23 +9,19 @@ import android.widget.ArrayAdapter;
 
 public class ResultsActivity extends ListActivity {
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ArrayList<String> results = getIntent().getExtras().getStringArrayList(ResultsActivity.class.getPackage().toString()+".result");
 		setContentView(R.layout.activity_results);
-        setListAdapter(new ArrayAdapter<String>(this, 
-             android.R.layout.simple_list_item_1, results));
-		
+        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, results));
 		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_results, menu);
-		return true;
+		return false;
 	}
 
+	
 }

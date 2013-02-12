@@ -77,7 +77,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	
 	
 	
-	private String nextChar(String[][] game, int indexV, int indexH, String soFar, boolean [][] visited){
+	private String nextChar(String[][] game, int indexVertical, int indexHorisontal, String soFar, boolean [][] visited){
 		
 		if(soFar.length() > 0 && tree.get(soFar) == null){
 			return soFar;
@@ -87,21 +87,25 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 			foundWords.add(soFar);
 		}
 
-		visited[indexV][indexH] = true;
+		visited[indexVertical][indexHorisontal] = true;
 
+		//Visit all (unvisited) neighbors.
 		for(int i = -1; i <= 1; i++){
 			for(int j = -1; j <= 1; j++){
+				//The character we just visited.
 				if(i == 0 && j == 0){
 					continue;
 				}
-				if(indexV+i < 0 || indexV+i > 3){
+				//Don't go outside the game field.
+				if(indexVertical+i < 0 || indexVertical+i > 3){
 					continue;
 				}
-				if(indexH+j < 0 || indexH+j > 3){
+				//Don't go outside the game field.
+				if(indexHorisontal+j < 0 || indexHorisontal+j > 3){
 					continue;
 				}
-				if(!visited[indexV+i][indexH+j]){
-					nextChar(game, indexV+i, indexH+j, soFar+game[indexV][indexH], copy(visited));
+				if(!visited[indexVertical+i][indexHorisontal+j]){
+					nextChar(game, indexVertical+i, indexHorisontal+j, soFar+game[indexVertical][indexHorisontal], copy(visited));
 				}
 			}			
 		}

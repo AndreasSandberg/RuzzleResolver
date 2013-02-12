@@ -18,6 +18,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	private final Context context;
 	private InputStream assetInputStream;
 	private CharacterTree tree;
+	private String gameField;
 	
 	public WordFinder(Context context, InputStream assetInputStream) {
 		super();
@@ -29,6 +30,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	@Override
 	protected ArrayList<String> doInBackground(String[][]... arg0) {
 		String[][] game = arg0[0];
+		gameField = "";
 		try {
 			TreeReader treeReader = new TreeReader(assetInputStream, game);
 			tree = treeReader.getTree();
@@ -40,6 +42,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4; j++){
 				nextChar(game, j, i, "", new boolean[4][4]);
+				gameField += game[i][j];
 			}
 		}
 		Collections.sort(foundWords, new Comparator<String>() {
@@ -72,6 +75,7 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 
 		Intent intent = new Intent(context, ResultsActivity.class);
 		intent.putStringArrayListExtra(ResultsActivity.class.getPackage().toString()+".result", result);
+		intent.putExtra(ResultsActivity.class.getPackage().toString()+".game", gameField);
 		context.startActivity(intent);
 	}
 	

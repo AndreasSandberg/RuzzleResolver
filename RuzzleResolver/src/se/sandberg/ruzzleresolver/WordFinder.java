@@ -5,21 +5,25 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
+import se.sandberg.ruzzleresolver.activities.ResultsActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
+public class WordFinder extends AsyncTask<String[][], Void, HashMap<String, List<CharIndex>>>{
 
-	private ArrayList<String> foundWords = new ArrayList<String>();
+	private HashMap<String, List<CharIndex>> foundWords = new HashMap<String, List<CharIndex>>();
 	private ProgressDialog dialog;
 	private final Context context;
 	private InputStream assetInputStream;
 	private CharacterTree tree;
-	private String gameField;
-	
+	private String[][] game;
+
 	public WordFinder(Context context, InputStream assetInputStream) {
 		super();
 		this.context = context;
@@ -28,34 +32,26 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 	}
 
 	@Override
-	protected ArrayList<String> doInBackground(String[][]... arg0) {
-		String[][] game = arg0[0];
-		gameField = "";
+	protected HashMap<String, List<CharIndex>> doInBackground(String[][]... arg0) {
+		game = arg0[0];
 		try {
 			TreeReader treeReader = new TreeReader(assetInputStream, game);
 			tree = treeReader.getTree();
 		} catch (IOException e) {
 			//TODO Better error handling...
-			return new ArrayList<String>();
+			return new HashMap<String, List<CharIndex>>();
 		}
-		
+
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4; j++){
-				nextChar(game, j, i, "", new boolean[4][4]);
-				gameField += game[i][j];
+				nextChar(game, j, i, "", new int[4][4], 0);
 			}
 		}
-		Collections.sort(foundWords, new Comparator<String>() {
-			@Override
-			public int compare(String o1, String o2) {
-				return o2.length() - o1.length();
-			}
-		});
 
 		return foundWords;
 	}
 
-	
+
 	@Override
 	protected void onPreExecute() {
 		dialog = new ProgressDialog(context);
@@ -67,32 +63,33 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 
 
 	@Override
-	protected void onPostExecute(ArrayList<String> result) {
+	protected void onPostExecute( HashMap<String, List<CharIndex>> result) {
 		super.onPostExecute(result);
 		if (dialog.isShowing()) {
 			dialog.dismiss();
 		}
 
 		Intent intent = new Intent(context, ResultsActivity.class);
-		intent.putStringArrayListExtra(ResultsActivity.class.getPackage().toString()+".result", result);
-		intent.putExtra(ResultsActivity.class.getPackage().toString()+".game", gameField);
+		intent.putExtra(ResultsActivity.class.getPackage().toString()+".result", result);
+		intent.putExtra(ResultsActivity.class.getPackage().toString()+".game", new GamePlan(game));
 		context.startActivity(intent);
 	}
-	
-	
-	
-	private String nextChar(String[][] game, int indexVertical, int indexHorisontal, String soFar, boolean [][] visited){
-		
+
+	private String nextChar(String[][] game, int indexVertical, int indexHorisontal, String soFar, int [][] visited, int characterNumber){
+
+		//This is the end condition, the tree does not have any word (or sub word) with these characters.
 		if(soFar.length() > 0 && tree.get(soFar) == null){
 			return soFar;
 		}
 		
-		if(!foundWords.contains(soFar) && tree.get(soFar).isWord()){
-			foundWords.add(soFar);
+		//If the word ha not been found before and it is a word, add it (and the coordinates to the result map)
+		if(!foundWords.containsKey(soFar) && tree.get(soFar).isWord()){
+			foundWords.put(soFar, createCharIndexList(visited));
 		}
-
-		visited[indexVertical][indexHorisontal] = true;
-
+		
+		//Set the character (coordinate) as visited, note the the character number is used to specify the order of the found characters.
+		visited[indexVertical][indexHorisontal] = ++characterNumber;
+		
 		//Visit all (unvisited) neighbors.
 		for(int i = -1; i <= 1; i++){
 			for(int j = -1; j <= 1; j++){
@@ -108,25 +105,46 @@ public class WordFinder extends AsyncTask<String[][], Void, ArrayList<String>>{
 				if(indexHorisontal+j < 0 || indexHorisontal+j > 3){
 					continue;
 				}
-				if(!visited[indexVertical+i][indexHorisontal+j]){
-					nextChar(game, indexVertical+i, indexHorisontal+j, soFar+game[indexVertical][indexHorisontal], copy(visited));
+				
+				//Zero means unvisited.
+				if(visited[indexVertical+i][indexHorisontal+j] == 0){
+					nextChar(game, indexVertical+i, indexHorisontal+j, soFar+game[indexVertical][indexHorisontal], copy(visited), characterNumber);
 				}
 			}			
 		}
 		return soFar;
 	}
 
-	private boolean[][] copy(boolean[][] source){
-		boolean[][] result = new boolean[4][4];
+	private List<CharIndex> createCharIndexList(int[][] visited) {
+
+		List<CharIndex> result = new ArrayList<CharIndex>();
+		for(int indexVertical = 0; indexVertical < 4; indexVertical++){
+			for(int indexHorisontal = 0; indexHorisontal < 4; indexHorisontal++){
+				if(visited[indexVertical][indexHorisontal] > 0){
+					//Add the character coordinate and the order to the result object.
+					result.add(new CharIndex(indexVertical, indexHorisontal, visited[indexVertical][indexHorisontal]));
+				}
+			}
+		}
+		
+		//The order is important when the path is to be painted in the PathActivity.
+		Collections.sort(result, new Comparator<CharIndex>() {
+			@Override
+			public int compare(CharIndex o1, CharIndex o2) {
+				return Integer.valueOf(o1.getVisitedNumber()).compareTo(o2.getVisitedNumber());
+			}
+		});
+
+		return result;
+	}
+
+	//Copy the integer arrays as fast as possible.
+	private int[][] copy(int[][] source){
+		int[][] result = new int[4][4];
 		for(int i = 0; i < result.length; i++){
 			System.arraycopy(source[i], 0, result[i], 0, 4);
 		}
-		
 		return result;
-
 	}
-
-
-
 
 }

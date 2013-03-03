@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.HashSet;
 
 public class TreeReader {
 
 	private CharacterTree tree;
+	private static final Charset charset = Charset.forName("ISO8859-1");
 
 	public TreeReader(final InputStream assetInputStream, final String[][] characters) throws IOException {
 		tree = new CharacterTree();
@@ -30,7 +32,7 @@ public class TreeReader {
 			}
 		}
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(assetInputStream, charset));
 		String line = null;
 		outer : while((line = reader.readLine()) != null){
 			for(Character c : line.toCharArray()){

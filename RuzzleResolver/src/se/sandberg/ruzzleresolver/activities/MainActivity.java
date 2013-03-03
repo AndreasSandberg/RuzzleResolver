@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 
+import se.sandberg.ruzzleresolver.Language;
 import se.sandberg.ruzzleresolver.R;
 import se.sandberg.ruzzleresolver.WordFinder;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -20,12 +24,16 @@ import android.widget.EditText;
  */
 public class MainActivity extends Activity {
 
+	public static final String LANGUAGE = "RuzzleLanguage";
+	private SharedPreferences preferences;
+	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		preferences = getPreferences(MODE_PRIVATE);
 		setContentView(R.layout.activity_main);
 	}
 
@@ -41,14 +49,26 @@ public class MainActivity extends Activity {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
+		menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, Language.SWEDISH.getLanguageName());
+		menu.add(Menu.NONE, Menu.FIRST+1, Menu.NONE, Language.ENGLISH.getLanguageName());	
+		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		Language lang = (item.getItemId() == Menu.FIRST ? Language.SWEDISH : Language.ENGLISH);
 
+		Editor editor = preferences.edit();
+		editor.putString(LANGUAGE, lang.name());
+		if(!editor.commit()){
+			createDialog("Inställningen kunde inte sparas", "Felmeddelande");
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
 	/**
 	 * Find words.
 	 *
@@ -69,7 +89,8 @@ public class MainActivity extends Activity {
 				game[i-1][j-1] = character;
 			}
 		}
-		InputStream assetInputStream = getAssets().open("swedish.txt");
+		Language selectedLang = Language.valueOf(preferences.getString(LANGUAGE, Language.SWEDISH.name()));
+		InputStream assetInputStream = getAssets().open(selectedLang.getFileName());
 		WordFinder wordFinder = new WordFinder(this, assetInputStream);
 		wordFinder.execute(game);
 	}

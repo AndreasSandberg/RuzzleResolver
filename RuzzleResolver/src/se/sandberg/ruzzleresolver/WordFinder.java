@@ -55,7 +55,7 @@ public class WordFinder extends AsyncTask<String[][], Void, HashMap<String, List
 	@Override
 	protected void onPreExecute() {
 		dialog = new ProgressDialog(context);
-		dialog.setMessage("Letar efter ord...");
+		dialog.setMessage(context.getResources().getString(R.string.processing_dialog));
 		dialog.setIndeterminate(true);
 		dialog.show();
 		super.onPreExecute();

@@ -40,7 +40,7 @@ public class ResultsActivity extends ListActivity {
 			}
 		});
 		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, wordsSorted));
-		setTitle("Antal ord: " + wordsSorted.size());
+		setTitle(getResources().getString(R.string.title_activity_results) + ": " + wordsSorted.size());
 
 	}
 

@@ -24,7 +24,7 @@ import android.widget.EditText;
  */
 public class MainActivity extends Activity {
 
-	public static final String LANGUAGE = "RuzzleLanguage";
+	public static final String LANGUAGE_SETTING_NAME = "RuzzleLanguage";
 	private SharedPreferences preferences;
 	
 	/* (non-Javadoc)
@@ -61,9 +61,9 @@ public class MainActivity extends Activity {
 		Language lang = (item.getItemId() == Menu.FIRST ? Language.SWEDISH : Language.ENGLISH);
 
 		Editor editor = preferences.edit();
-		editor.putString(LANGUAGE, lang.name());
+		editor.putString(LANGUAGE_SETTING_NAME, lang.name());
 		if(!editor.commit()){
-			createDialog("Inställningen kunde inte sparas", "Felmeddelande");
+			createDialog("Unable to save language setting", "Error");
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -83,13 +83,14 @@ public class MainActivity extends Activity {
 				EditText characterEdit = (EditText) findViewById(editTextId);
 				String character = characterEdit.getText().toString().toUpperCase(new Locale("sv"));
 				if(character == null || character.length() != 1){
-					createDialog("Du måste ange en bokstav i varje ruta.", "Inmatningsfel");
+					createDialog(getResources().getString(R.string.input_error_text), getResources().getString(R.string.input_error_title));
 					return;
 				}
 				game[i-1][j-1] = character;
 			}
 		}
-		Language selectedLang = Language.valueOf(preferences.getString(LANGUAGE, Language.SWEDISH.name()));
+		
+		Language selectedLang = Language.valueOf(preferences.getString(LANGUAGE_SETTING_NAME, getResources().getString(R.string.default_language)));
 		InputStream assetInputStream = getAssets().open(selectedLang.getFileName());
 		WordFinder wordFinder = new WordFinder(this, assetInputStream);
 		wordFinder.execute(game);

@@ -3,8 +3,12 @@
 
     <string name="app_name">Ruzzle Resolver</string>
     <string name="menu_settings">Settings</string>
-    <string name="buttonLabel">Hitta ord!</string>
-    <string name="title_activity_results">Funna ord</string>
-    <string name="title_activity_path">PathActivity</string>
+    <string name="buttonLabel">Find words!</string>
+    <string name="title_activity_results">Found words</string>
+    <string name="title_activity_path">Shows how the word can be created</string>
+    <string name="input_error_title">Input error</string>
+    <string name="input_error_text">You must set one character in every box.</string>
+    <string name="processing_dialog">Finding words..</string>
+    <string name="default_language">ENGLISH</string>
 
 </resources>

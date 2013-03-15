@@ -1,12 +1,15 @@
 package se.sandberg.ruzzleresolver;
 
+import java.util.Locale;
+
 public enum Language {
-	
-	SWEDISH("Svenska", "swedish.txt"), ENGLISH("Engelska", "brit-a-z.txt");
+
+	SWEDISH(new Locale("sv").getDisplayLanguage(Locale.getDefault()), "swedish.txt"), 
+	ENGLISH(Locale.ENGLISH.getDisplayLanguage(Locale.getDefault()), "brit-a-z.txt");
 	
 	private String languageName;
 	private String fileName;
-
+	
 	private Language(String languageName, String fileName) {
 		this.languageName = languageName;
 		this.fileName = fileName;

@@ -21,6 +21,8 @@ import android.widget.EditText;
 
 /**
  * The Class MainActivity is the application start activity.
+ * 
+ * @author Andreas Sandberg
  */
 public class MainActivity extends Activity {
 
@@ -51,15 +53,15 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, Language.SWEDISH.getLanguageName());
-		menu.add(Menu.NONE, Menu.FIRST+1, Menu.NONE, Language.ENGLISH.getLanguageName());	
+		for(Language lang : Language.values()){
+			menu.add(Menu.NONE, lang.ordinal(), Menu.NONE, lang.getLanguageName());
+		}
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
-		Language lang = (item.getItemId() == Menu.FIRST ? Language.SWEDISH : Language.ENGLISH);
-
+		Language lang = Language.values()[item.getItemId()];
 		Editor editor = preferences.edit();
 		editor.putString(LANGUAGE_SETTING_NAME, lang.name());
 		if(!editor.commit()){

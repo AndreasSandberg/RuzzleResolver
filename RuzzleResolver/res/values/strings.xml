@@ -9,6 +9,6 @@
     <string name="input_error_title">Input error</string>
     <string name="input_error_text">You must set one character in every box.</string>
     <string name="processing_dialog">Finding words..</string>
-    <string name="default_language">ENGLISH</string>
+    <string name="default_language">ENGLISH_US</string>
 
 </resources>

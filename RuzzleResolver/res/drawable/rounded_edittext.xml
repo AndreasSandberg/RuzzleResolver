@@ -23,13 +23,6 @@
                 android:width="0.7dp"
                 android:color="#BDBDBD" />
 
-            <!--
-        <padding
-        android:left="integer"
-        android:top="integer"
-        android:right="integer"
-        android:bottom="integer" />
-            -->
             <size
                 android:height="60dip"
                 android:width="60dip" />

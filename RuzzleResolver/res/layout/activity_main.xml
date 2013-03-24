@@ -2,255 +2,289 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" 
-    android:background="@drawable/main_header_selector">
+    android:background="@drawable/main_header_selector"
+    tools:context=".MainActivity" >
 
     <!-- First row -->
 
     <EditText
         android:id="@+id/editText1"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:background="#EC7703"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
+        android:fadingEdgeLength="10dp"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textIsSelectable="false" >
     </EditText>
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText1"
         android:layout_alignBottom="@+id/editText1"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText1"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText2"
         android:layout_alignBottom="@+id/editText2"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText2"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText4"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText3"
         android:layout_alignBottom="@+id/editText3"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText3"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <!-- Second row -->
 
     <EditText
         android:id="@+id/editText5"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
-        android:background="#EC7703"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText6"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText5"
         android:layout_alignBottom="@+id/editText5"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText5"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText7"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText6"
         android:layout_alignBottom="@+id/editText6"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText6"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText8"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText7"
         android:layout_alignBottom="@+id/editText7"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText7"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <!-- Third row -->
 
     <EditText
         android:id="@+id/editText9"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="170dp"
-        android:background="#EC7703"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText10"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText9"
         android:layout_alignBottom="@+id/editText9"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText9"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText11"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText10"
         android:layout_alignBottom="@+id/editText10"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText10"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText12"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText11"
         android:layout_alignBottom="@+id/editText11"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText11"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <!-- Fourth row -->
 
     <EditText
         android:id="@+id/editText13"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="240dp"
-        android:background="#EC7703"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText14"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText13"
         android:layout_alignBottom="@+id/editText13"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText13"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText15"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText14"
         android:layout_alignBottom="@+id/editText14"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText14"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <EditText
         android:id="@+id/editText16"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
         android:layout_alignBaseline="@+id/editText15"
         android:layout_alignBottom="@+id/editText15"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/editText15"
-        android:background="#EC7703"
+        android:background="@drawable/rounded_edittext"
         android:ems="1"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:maxLength="1"
-        android:paddingLeft="10dip" >
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:textStyle="bold" >
     </EditText>
 
     <Button

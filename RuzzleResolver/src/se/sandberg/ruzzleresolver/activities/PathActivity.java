@@ -27,6 +27,7 @@ public class PathActivity extends Activity {
 			
 			int editTextId = getResources().getIdentifier("editText" + ((indexHorisontal + indexVertical*4)+1), "id", "se.sandberg.ruzzleresolver");
 			EditText characterEdit = (EditText) findViewById(editTextId);
+			characterEdit.setBackgroundResource(R.drawable.yellow_rounded_edittext);
 			characterEdit.setText(character);
 		}
 	}

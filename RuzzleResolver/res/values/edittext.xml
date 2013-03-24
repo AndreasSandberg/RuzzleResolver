@@ -5,7 +5,24 @@
         <item name="android:layout_width">60dip</item>
         <item name="android:layout_height">60dip</item>
         <item name="android:background">@drawable/rounded_edittext</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:ems">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:inputType">textCapCharacters|textNoSuggestions</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RuzzlePath_EditText">
+        <item name="android:layout_width">60dip</item>
+        <item name="android:layout_height">60dip</item>
+        <item name="android:background">@drawable/rounded_edittext</item>
         <item name="android:cursorVisible">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
         <item name="android:ems">1</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:inputType">textCapCharacters|textNoSuggestions</item>

@@ -13,9 +13,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 
@@ -26,9 +29,35 @@ import android.widget.EditText;
  */
 public class MainActivity extends Activity {
 
+	private final class EditTextListener implements TextWatcher {
+		private int id; 
+		public EditTextListener(int id) {
+			this.id = id;
+		}
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			//Don't move is character was removed.
+			if(s == null || s.length() == 0){
+				return;
+			}
+			int editTextId = getResources().getIdentifier("editText" + id, "id", "se.sandberg.ruzzleresolver");
+			EditText characterEdit = (EditText) findViewById(editTextId);
+			String character = characterEdit.getText().toString();
+			if(character == null  || character.length() == 0){
+				characterEdit.requestFocus();	
+			}
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	}
+
 	public static final String LANGUAGE_SETTING_NAME = "RuzzleLanguage";
 	private SharedPreferences preferences;
-	
+
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -37,6 +66,25 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		preferences = getPreferences(MODE_PRIVATE);
 		setContentView(R.layout.activity_main);
+		registerEditTextListeners();
+	}
+
+	private void registerEditTextListeners() {
+		for(int i = 1; i < 5; i++){
+			for(int j = 1; j < 5; j++){
+				if(i == 4 && j == 4){
+					return;
+				}
+				int index = (j + (i-1)*4);
+				int editTextId = getResources().getIdentifier("editText" + index, "id", "se.sandberg.ruzzleresolver");
+				EditText characterEdit = (EditText) findViewById(editTextId);
+				if(characterEdit != null){
+					characterEdit.addTextChangedListener(new EditTextListener(index+1));
+
+				}
+			}
+		}
+
 	}
 
 	/* (non-Javadoc)
@@ -58,7 +106,7 @@ public class MainActivity extends Activity {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		Language lang = Language.values()[item.getItemId()];
@@ -67,10 +115,33 @@ public class MainActivity extends Activity {
 		if(!editor.commit()){
 			createDialog("Unable to save language setting", "Error");
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+	public void clear(View view) {
+		ViewGroup layoutGroup = (ViewGroup)findViewById(getResources().getIdentifier("layoutGroup", "id", "se.sandberg.ruzzleresolver"));
+		for(int i = 0;  i < layoutGroup.getChildCount(); i++){
+			View childAt = layoutGroup.getChildAt(i);
+			if(childAt instanceof EditText && childAt != null){
+				((EditText)childAt).setText("");
+			}
+		}
+		/*for(int i = 1; i < 5; i++){
+			for(int j = 1; j < 5; j++){
+				int index = (j + (i-1)*4);
+				int editTextId = getResources().getIdentifier("editText" + index, "id", "se.sandberg.ruzzleresolver");
+				EditText characterEdit = (EditText) findViewById(editTextId);
+				if(characterEdit != null){
+					characterEdit.setText("");
+				}
+			}
+		}*/
+		if(view != null){
+			view.clearFocus();
+		}
+	}
+
 	/**
 	 * Find words.
 	 *
@@ -91,13 +162,13 @@ public class MainActivity extends Activity {
 				game[i-1][j-1] = character;
 			}
 		}
-		
+
 		Language selectedLang = Language.valueOf(preferences.getString(LANGUAGE_SETTING_NAME, getResources().getString(R.string.default_language)));
 		InputStream assetInputStream = getAssets().open(selectedLang.getFileName());
 		WordFinder wordFinder = new WordFinder(this, assetInputStream);
 		wordFinder.execute(game);
 	}
-	
+
 	/**
 	 * Creates the dialog.
 	 *
